@@ -1,75 +1,79 @@
-let state = "lang";
-let langIndex = 0;
-let sentenceIndex = 0;
-let currentWords = [];
-let correct = "";
+const screenLang = document.getElementById("screen-lang");
+const screenQuiz = document.getElementById("screen-quiz");
+const langButtons = document.getElementById("lang-buttons");
+const questionEl = document.getElementById("question");
+const choicesEl = document.getElementById("choices");
+const checkBtn = document.getElementById("check");
 
-const langButtons = document.getElementById("langButtons");
-const quiz = document.getElementById("quiz");
+const state = {
+  langIndex: 0,
+  sentenceIndex: 0,
+  answer: [],
+  selected: []
+};
 
-LANGUAGES.forEach((lang, i) => {
-  const btn = document.createElement("button");
-  btn.textContent = lang.name;
-  btn.onclick = () => selectLanguage(i);
-  langButtons.appendChild(btn);
-});
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
 
-function selectLanguage(i) {
-  langIndex = i;
-  state = "quiz";
-  document.getElementById("langSelect").style.display = "none";
-  quiz.style.display = "block";
+function showLanguages() {
+  langButtons.innerHTML = "";
+  LANGUAGES.forEach((lang, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = lang.name;
+    btn.onclick = () => startLang(i);
+    langButtons.appendChild(btn);
+  });
+}
+
+function startLang(i) {
+  state.langIndex = i;
+  state.sentenceIndex = 0;
+  screenLang.classList.add("hidden");
+  screenQuiz.classList.remove("hidden");
   loadQuestion();
 }
 
 function loadQuestion() {
-  currentWords = [];
-  document.getElementById("answerBox").textContent = "";
-  document.getElementById("wordButtons").innerHTML = "";
-  document.getElementById("nextBtn").style.display = "none";
+  const lang = LANGUAGES[state.langIndex];
+  const s = lang.sentences[state.sentenceIndex];
 
-  const s = LANGUAGES[langIndex].sentences;
-  sentenceIndex = Math.floor(Math.random() * s.length);
+  state.answer = s.lang.split(" ");
+  state.selected = [];
 
-  const q = s[sentenceIndex];
-  correct = q.lang;
+  questionEl.textContent = s.jp;
+  choicesEl.innerHTML = "";
 
-  document.getElementById("question").textContent = q.jp;
-
-  const words = q.lang.split(" ").sort(() => Math.random() - 0.5);
-
-  words.forEach(w => {
-    const b = document.createElement("button");
-    b.textContent = w;
-    b.onclick = () => {
-      currentWords.push(w);
-      b.style.display = "none";
-      updateAnswer();
-    };
-    document.getElementById("wordButtons").appendChild(b);
+  shuffle(state.answer).forEach(word => {
+    const btn = document.createElement("button");
+    btn.textContent = word;
+    btn.onclick = () => toggleWord(btn, word);
+    choicesEl.appendChild(btn);
   });
 }
 
-function updateAnswer() {
-  document.getElementById("answerBox").textContent = currentWords.join(" ");
+function toggleWord(btn, word) {
+  if (btn.classList.contains("selected")) {
+    btn.classList.remove("selected");
+    state.selected = state.selected.filter(w => w !== word);
+  } else {
+    btn.classList.add("selected");
+    state.selected.push(word);
+  }
 }
 
-document.getElementById("backBtn").onclick = () => {
-  if (!currentWords.length) return;
-  const w = currentWords.pop();
-  [...document.querySelectorAll("#wordButtons button")]
-    .find(b => b.textContent === w && b.style.display === "none")
-    .style.display = "";
-  updateAnswer();
-};
-
-document.getElementById("checkBtn").onclick = () => {
-  if (currentWords.join(" ") === correct) {
-    alert("正解");
+checkBtn.onclick = () => {
+  if (state.selected.join(" ") === state.answer.join(" ")) {
+    state.sentenceIndex++;
+    if (state.sentenceIndex >= LANGUAGES[state.langIndex].sentences.length) {
+      alert("完了");
+      location.reload();
+    } else {
+      loadQuestion();
+    }
   } else {
-    alert("不正解\n正解: " + correct);
+    alert("違う");
   }
-  document.getElementById("nextBtn").style.display = "inline";
 };
 
-document.getElementById("nextBtn").onclick = loadQuestion;
+showLanguages();
