@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>DiscereLingo</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<title>DiscereLingo</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app">
-  <h1>DiscereLingo</h1>
-  <div class="courses" id="courseList"></div>
+<h1>DiscereLingo</h1>
+
+<div id="langSelect">
+  <div id="langButtons"></div>
 </div>
 
-<script src="langdata.js" defer></script>
-<script src="main.js" defer></script>
+<div id="quiz" style="display:none;">
+  <div id="question"></div>
+  <div id="answerBox"></div>
+  <div id="wordButtons"></div>
+
+  <button id="backBtn">← 戻す</button>
+  <button id="checkBtn">答え合わせ</button>
+  <button id="nextBtn" style="display:none;">次へ</button>
+</div>
+
+<script src="langdata.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
