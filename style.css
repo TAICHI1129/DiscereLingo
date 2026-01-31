@@ -1,29 +1,40 @@
 body {
+  margin: 0;
   font-family: sans-serif;
-  background: #f5f5f5;
-  padding: 20px;
+  background: #f6f7fb;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.hidden {
-  display: none;
+.container {
+  text-align: center;
 }
 
-#langList button,
-#choices button,
-#nextBtn {
-  margin: 5px;
-  padding: 10px 14px;
-  font-size: 16px;
+.title {
+  font-size: 48px;
+  margin-bottom: 40px;
 }
 
-#question {
-  font-size: 20px;
-  margin: 20px 0;
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 160px);
+  gap: 24px;
+  justify-content: center;
 }
 
-#answerArea span {
-  display: inline-block;
-  padding: 6px 10px;
-  margin: 4px;
-  background: #ddd;
+.lang-btn {
+  height: 90px;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+  background: #ffffff;
+  box-shadow: 0 4px 0 #ddd;
+  cursor: pointer;
+}
+
+.lang-btn:active {
+  transform: translateY(4px);
+  box-shadow: none;
 }
