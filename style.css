@@ -1,43 +1,55 @@
 body {
-  margin: 0;
-  background: #eaf7ee;
   font-family: system-ui, sans-serif;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.app {
+  background: #f6f7fb;
   text-align: center;
+  margin: 0;
 }
 
 h1 {
-  font-size: 56px;
-  font-weight: 800;
-  color: #2e7d32;
-  margin-bottom: 48px;
+  margin: 20px 0;
 }
 
-.courses {
+.screen {
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.grid {
   display: grid;
-  grid-template-columns: repeat(3, 180px);
-  gap: 28px;
-  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  max-width: 500px;
+  margin: 20px auto;
 }
 
-.course {
-  height: 110px;
-  border-radius: 28px;
+button {
+  padding: 14px;
   border: none;
-  background: #ffffff;
-  font-size: 18px;
-  font-weight: 700;
+  border-radius: 12px;
+  font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 8px 0 #c8e6c9;
 }
 
-.course:active {
-  transform: translateY(6px);
-  box-shadow: 0 2px 0 #c8e6c9;
+#lang-buttons button {
+  background: #58cc02;
+  color: white;
+}
+
+#choices button {
+  background: white;
+  border: 2px solid #ddd;
+}
+
+#choices button.selected {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+#check {
+  background: #2563eb;
+  color: white;
+  margin-top: 20px;
 }
