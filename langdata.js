@@ -15,13 +15,13 @@ const LANGUAGES = [
     ]
   },
   {
-    id: "yourlang",
-    name: "Your Language",
-    author: "Author",
+    id: "Example",
+    name: "Example語",
+    author: "作者",
     sentences: [
       {
         question: "私は水を飲む",
-        answer: ["Mez", "drink", "water"]
+        answer: ["I", "drink", "the", "water"]
       }
     ]
   }
