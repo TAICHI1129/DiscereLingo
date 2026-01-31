@@ -1,33 +1,29 @@
 let currentLang = null;
 let sentenceIndex = 0;
 let currentSentence = null;
-let userAnswer = [];
 let shuffled = [];
+let userAnswer = [];
 
-function shuffle(arr) {
-  return arr
-    .map(v => ({ v, r: Math.random() }))
-    .sort((a, b) => a.r - b.r)
-    .map(o => o.v);
-}
-
-/* 言語選択画面 */
 function init() {
-  const area = document.getElementById("langButtons");
+  const list = document.getElementById("langList");
+  list.innerHTML = "";
 
   LANGUAGES.forEach(lang => {
     const btn = document.createElement("button");
-    btn.className = "lang-btn";
     btn.textContent = lang.name;
     btn.onclick = () => startLang(lang);
-    area.appendChild(btn);
+    list.appendChild(btn);
   });
+
+  document.getElementById("nextBtn").onclick = nextSentence;
 }
 
 function startLang(lang) {
   currentLang = lang;
   sentenceIndex = 0;
-  document.getElementById("langTitle").textContent = lang.name;
+
+  document.getElementById("langTitle").textContent =
+    `${lang.name} / ${lang.author}`;
 
   document.getElementById("langScreen").classList.add("hidden");
   document.getElementById("lessonScreen").classList.remove("hidden");
@@ -35,60 +31,61 @@ function startLang(lang) {
   loadSentence();
 }
 
-function back() {
-  document.getElementById("lessonScreen").classList.add("hidden");
-  document.getElementById("langScreen").classList.remove("hidden");
-}
-
-/* レッスン */
 function loadSentence() {
   currentSentence = currentLang.sentences[sentenceIndex];
   userAnswer = [];
 
-  document.getElementById("question").textContent = currentSentence.question;
+  document.getElementById("question").textContent =
+    currentSentence.question;
 
   shuffled = shuffle([...currentSentence.answer]);
-  renderChoices();
+
   renderAnswer();
+  renderChoices();
 }
 
 function renderChoices() {
-  const c = document.getElementById("choices");
-  c.innerHTML = "";
+  const area = document.getElementById("choices");
+  area.innerHTML = "";
 
   shuffled.forEach(word => {
     const btn = document.createElement("button");
-    btn.className = "word-btn";
     btn.textContent = word;
     btn.onclick = () => {
       userAnswer.push(word);
-      btn.disabled = true;
       renderAnswer();
     };
-    c.appendChild(btn);
+    area.appendChild(btn);
   });
 }
 
 function renderAnswer() {
-  const a = document.getElementById("answerArea");
-  a.innerHTML = userAnswer.map(w => `<span>${w}</span>`).join(" ");
+  const area = document.getElementById("answerArea");
+  area.innerHTML = "";
+
+  userAnswer.forEach(w => {
+    const span = document.createElement("span");
+    span.textContent = w;
+    area.appendChild(span);
+  });
 }
 
-function check() {
-  const correct = currentSentence.answer.join(" ");
-  const user = userAnswer.join(" ");
-
-  if (user === correct) {
-    sentenceIndex++;
-    if (sentenceIndex < currentLang.sentences.length) {
-      loadSentence();
-    } else {
-      alert("レッスン完了");
-      back();
-    }
-  } else {
-    alert("不正解\n正解: " + correct);
+function nextSentence() {
+  sentenceIndex++;
+  if (sentenceIndex >= currentLang.sentences.length) {
+    alert("終了");
+    location.reload();
+    return;
   }
+  loadSentence();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 init();
