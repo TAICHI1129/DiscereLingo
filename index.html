@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>DiscereLingo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>DiscereLingo</h1>
+    <select id="langSelect"></select>
+  </header>
 
+  <main>
+    <div class="card">
+      <h2 id="lessonTitle">レッスン</h2>
+
+      <div id="content" class="content">
+        <p>コースを選んでください</p>
+      </div>
+
+      <div class="buttons">
+        <button class="green" onclick="startWords()">単語</button>
+        <button class="blue" onclick="quiz()">クイズ</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="langdata.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
