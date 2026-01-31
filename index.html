@@ -6,25 +6,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+
+  <!-- 言語選択画面 -->
+  <div id="langScreen" class="screen">
     <h1>DiscereLingo</h1>
-    <select id="langSelect"></select>
-  </header>
+    <p>学習する言語を選んでください</p>
+    <div id="langButtons"></div>
+  </div>
 
-  <main>
-    <div class="card">
-      <h2 id="lessonTitle">レッスン</h2>
+  <!-- 学習画面 -->
+  <div id="learnScreen" class="screen hidden">
+    <header>
+      <h2 id="lessonTitle"></h2>
+      <button onclick="backToLang()">言語変更</button>
+    </header>
 
-      <div id="content" class="content">
-        <p>コースを選んでください</p>
+    <main>
+      <div class="card">
+        <div id="content">レッスンを選択</div>
+        <div class="buttons">
+          <button class="green" onclick="startWords()">単語</button>
+          <button class="blue" onclick="quiz()">クイズ</button>
+        </div>
       </div>
-
-      <div class="buttons">
-        <button class="green" onclick="startWords()">単語</button>
-        <button class="blue" onclick="quiz()">クイズ</button>
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script src="langdata.js"></script>
   <script src="main.js"></script>
