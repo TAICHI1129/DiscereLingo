@@ -1,11 +1,17 @@
 const LANGUAGES = [
   {
     id: "jeneleseez",
-    name: "Jeneleseez",
-    author: "Taichi",
-    words: [
-      { word: "Waz", meaning: "なぜ", pos: "疑問詞" },
-      { word: "go", meaning: "行く", pos: "動詞" }
+    name: "ジェネレス語",
+    author: "Jen",
+    sentences: [
+      {
+        question: "私は東京へ行く",
+        answer: ["Mez", "go", "we", "Tokyo"]
+      },
+      {
+        question: "なぜ行くの？",
+        answer: ["Waz", "go"]
+      }
     ]
   }
 ];
