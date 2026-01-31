@@ -5,23 +5,23 @@ const LANGUAGES = [
     author: "Jen",
     sentences: [
       {
-        question: "私は東京へ行く",
-        answer: ["Mez", "go", "we", "Tokyo"]
+        jp: "私は 東京へ 行く",
+        lang: "Mez go we Tokyo"
       },
       {
-        question: "なぜ行くの？",
-        answer: ["Waz", "go"]
+        jp: "なぜ 行く？",
+        lang: "Waz go"
       }
     ]
   },
   {
-    id: "Example",
-    name: "Example語",
-    author: "作者",
+    id: "example1",
+    name: "Example1",
+    author: "Friend",
     sentences: [
       {
-        question: "私は水を飲む",
-        answer: ["I", "drink", "the", "water"]
+        jp: "水を 飲む",
+        lang: "I drink water"
       }
     ]
   }
