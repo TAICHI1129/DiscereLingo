@@ -13,5 +13,16 @@ const LANGUAGES = [
         answer: ["Waz", "go"]
       }
     ]
+  },
+  {
+    id: "yourlang",
+    name: "Your Language",
+    author: "Author",
+    sentences: [
+      {
+        question: "私は水を飲む",
+        answer: ["Mez", "drink", "water"]
+      }
+    ]
   }
 ];
