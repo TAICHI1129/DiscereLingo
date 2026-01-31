@@ -2,34 +2,27 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>DiscereLingo</title>
+  <title>Language Course</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 言語選択 -->
-  <div id="langScreen" class="screen">
-    <h1>DiscereLingo</h1>
-    <p>学習する言語を選択</p>
-    <div id="langButtons"></div>
-  </div>
+<div id="langScreen">
+  <h1>言語を選択</h1>
+  <div id="langList"></div>
+</div>
 
-  <!-- レッスン画面 -->
-  <div id="lessonScreen" class="screen hidden">
-    <header>
-      <h2 id="langTitle"></h2>
-      <button class="small" onclick="back()">変更</button>
-    </header>
+<div id="lessonScreen" class="hidden">
+  <h2 id="langTitle"></h2>
+  <div id="question"></div>
 
-    <div class="card">
-      <div id="question" class="question"></div>
-      <div id="answerArea" class="answer"></div>
-      <div id="choices" class="choices"></div>
-      <button id="checkBtn" onclick="check()">チェック</button>
-    </div>
-  </div>
+  <div id="answerArea"></div>
+  <div id="choices"></div>
 
-  <script src="langdata.js"></script>
-  <script src="main.js"></script>
+  <button id="nextBtn">次へ</button>
+</div>
+
+<script src="langdata.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
