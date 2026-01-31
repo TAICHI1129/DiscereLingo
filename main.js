@@ -1,52 +1,94 @@
 let currentLang = null;
+let sentenceIndex = 0;
+let currentSentence = null;
+let userAnswer = [];
+let shuffled = [];
 
+function shuffle(arr) {
+  return arr
+    .map(v => ({ v, r: Math.random() }))
+    .sort((a, b) => a.r - b.r)
+    .map(o => o.v);
+}
+
+/* 言語選択画面 */
 function init() {
   const area = document.getElementById("langButtons");
 
   LANGUAGES.forEach(lang => {
     const btn = document.createElement("button");
     btn.className = "lang-btn";
-    btn.textContent = lang.name + " / " + lang.author;
-    btn.onclick = () => selectLang(lang);
+    btn.textContent = lang.name;
+    btn.onclick = () => startLang(lang);
     area.appendChild(btn);
   });
 }
 
-function selectLang(lang) {
+function startLang(lang) {
   currentLang = lang;
-  document.getElementById("lessonTitle").textContent = lang.name;
+  sentenceIndex = 0;
+  document.getElementById("langTitle").textContent = lang.name;
 
   document.getElementById("langScreen").classList.add("hidden");
-  document.getElementById("learnScreen").classList.remove("hidden");
+  document.getElementById("lessonScreen").classList.remove("hidden");
+
+  loadSentence();
 }
 
-function backToLang() {
-  document.getElementById("learnScreen").classList.add("hidden");
+function back() {
+  document.getElementById("lessonScreen").classList.add("hidden");
   document.getElementById("langScreen").classList.remove("hidden");
 }
 
-function startWords() {
-  const c = document.getElementById("content");
+/* レッスン */
+function loadSentence() {
+  currentSentence = currentLang.sentences[sentenceIndex];
+  userAnswer = [];
+
+  document.getElementById("question").textContent = currentSentence.question;
+
+  shuffled = shuffle([...currentSentence.answer]);
+  renderChoices();
+  renderAnswer();
+}
+
+function renderChoices() {
+  const c = document.getElementById("choices");
   c.innerHTML = "";
-  currentLang.words.forEach(w => {
-    c.innerHTML += `<p><strong>${w.word}</strong> = ${w.meaning}</p>`;
+
+  shuffled.forEach(word => {
+    const btn = document.createElement("button");
+    btn.className = "word-btn";
+    btn.textContent = word;
+    btn.onclick = () => {
+      userAnswer.push(word);
+      btn.disabled = true;
+      renderAnswer();
+    };
+    c.appendChild(btn);
   });
 }
 
-function quiz() {
-  const c = document.getElementById("content");
-  const w = currentLang.words[Math.floor(Math.random() * currentLang.words.length)];
-  c.innerHTML = `
-    <p><strong>${w.word}</strong></p>
-    <input id="ans">
-    <button onclick="check('${w.meaning}')">答える</button>
-  `;
+function renderAnswer() {
+  const a = document.getElementById("answerArea");
+  a.innerHTML = userAnswer.map(w => `<span>${w}</span>`).join(" ");
 }
 
-function check(correct) {
-  const a = document.getElementById("ans").value;
-  alert(a === correct ? "正解！" : "違う：" + correct);
+function check() {
+  const correct = currentSentence.answer.join(" ");
+  const user = userAnswer.join(" ");
+
+  if (user === correct) {
+    sentenceIndex++;
+    if (sentenceIndex < currentLang.sentences.length) {
+      loadSentence();
+    } else {
+      alert("レッスン完了");
+      back();
+    }
+  } else {
+    alert("不正解\n正解: " + correct);
+  }
 }
 
 init();
-
